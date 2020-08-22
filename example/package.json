@@ -8,6 +8,7 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "@material-ui/icons": "^4.9.1",
     "react-app-polyfill": "^1.0.0"
   },
   "alias": {
