@@ -46,6 +46,6 @@
   },
   "dependencies": {
     "@material-ui/icons": "^4.9.1",
-    "@snackstack/core": "^0.0.0-experimental-1ac67bfca"
+    "@snackstack/core": "^0.0.0-experimental-07c892cc5"
   }
 }

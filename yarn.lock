@@ -1134,10 +1134,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@snackstack/core@^0.0.0-experimental-1ac67bfca":
-  version "0.0.0-experimental-1ac67bfca"
-  resolved "https://registry.yarnpkg.com/@snackstack/core/-/core-0.0.0-experimental-1ac67bfca.tgz#35f7efe5bc5ea8be2572c451ea242a282d177f1c"
-  integrity sha512-o1/F8Tj/nSti7LQilCx+ls4IxpA+KvqsEYlQdAlidP+wU0o1wTvMGJh/MZkDBoEv4ZqAZ9haoL5iuNmuIx57YQ==
+"@snackstack/core@^0.0.0-experimental-07c892cc5":
+  version "0.0.0-experimental-07c892cc5"
+  resolved "https://registry.yarnpkg.com/@snackstack/core/-/core-0.0.0-experimental-07c892cc5.tgz#99525f1c9db30a58d0017ae94de7d9e48185090e"
+  integrity sha512-3YjdZ60opo6V8olHyqoPOW556+WXvxVCuTR1FcLa6DMsDbjgHulYHAg0Q5bnOyuRtVVZ5vivoiTYx7ASz2XE1g==
 
 "@types/babel__core@^7.1.0":
   version "7.1.9"

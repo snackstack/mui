@@ -1,8 +1,8 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { MaterialSnackRenderer } from '../.';
-import { SnackProvider, useSnacks } from '@snackstack/core';
+import { MaterialSnackProvider } from '../.';
+import { useSnacks } from '@snackstack/core';
 import {
   Accordion,
   AccordionDetails,
@@ -95,10 +95,8 @@ const App = () => {
 };
 
 ReactDOM.render(
-  <SnackProvider
-    renderer={MaterialSnackRenderer}
-    options={{}}
-    rendererProps={{
+  <MaterialSnackProvider
+    materialOptions={{
       anchorOrigin: {
         horizontal: 'left',
         vertical: 'bottom',
@@ -106,6 +104,6 @@ ReactDOM.render(
     }}
   >
     <App />
-  </SnackProvider>,
+  </MaterialSnackProvider>,
   document.getElementById('root')
 );
