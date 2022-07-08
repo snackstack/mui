@@ -1,11 +1,11 @@
-import { Alert, AlertColor, Slide, SlideProps, Snackbar, SnackbarOrigin, SnackbarProps } from '@mui/material';
+import { Slide, SlideProps, Snackbar, SnackbarOrigin, SnackbarProps } from '@mui/material';
 import { Snack, ActiveSnack, useSnackManager } from '@snackstack/core';
 import React, { FC, useCallback, useMemo } from 'react';
+import MuiAlert, { AlertProps, AlertColor } from '@mui/material/Alert';
 
 export type MuiSnackbarProps = Pick<SnackbarProps, 'anchorOrigin' | 'autoHideDuration'> & {
   spacing?: number;
-  heightOffset?: number;
-  anchorOrigin: Exclude<SnackbarProps['anchorOrigin'], undefined>;
+  borderDistance?: number;
 };
 
 type Props = {
@@ -13,51 +13,68 @@ type Props = {
   options: MuiSnackbarProps;
 };
 
+const defaultAnchorOrigin: SnackbarOrigin = {
+  vertical: 'bottom',
+  horizontal: 'left',
+};
+
+// todo: better defaults
+const defaultBorderDistance = 20;
+const defaultSpacing = 5;
+const defaultAutohideDuration = 3000;
+
 /** @internal */
 export const MuiSnackbar: FC<Props> = ({ snack, options }) => {
-  const { id: snackId, open, message, variant, action } = snack;
+  const { id: snackId, open, message, variant, persist, action } = snack;
 
-  // todo: better defaults
-  const heightOffset = options.heightOffset ?? 20;
-  const spacing = options.spacing ?? 20;
+  const borderDistance = options.borderDistance ?? defaultBorderDistance;
+  const spacing = options.spacing ?? defaultSpacing;
+  const autoHideDuration = persist ? undefined : options.autoHideDuration ?? defaultAutohideDuration;
+  const anchorOrigin = options.anchorOrigin ?? defaultAnchorOrigin;
 
   const snackManager = useSnackManager();
 
-  const onClose = useCallback(() => snackManager.close(snackId), [snackId, snackManager]);
-  const onRemove = useCallback(() => snackManager.remove(snackId), [snackId, snackManager]);
+  const onClose = useCallback<Exclude<SnackbarProps['onClose'], undefined>>(
+    (_, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
 
-  const messageIsValidElement = React.isValidElement(message);
+      snackManager.close(snackId);
+    },
+    [snackId, snackManager]
+  );
 
-  const content = messageIsValidElement ? (
-    message
-  ) : (
-    <Alert onClose={onClose} action={action} severity={getSeverity(variant)}>
-      {/* sx={{ width: '100%' }} */}
+  const onRemove = useCallback(() => {
+    snackManager.remove(snackId);
+  }, [snackId, snackManager]);
+
+  const content = (
+    <Alert action={action} severity={getSeverity(variant)}>
       {message}
     </Alert>
   );
 
-  const offset = heightOffset + snack.index * spacing;
+  const offset = borderDistance + snack.index * spacing;
 
   const style: React.CSSProperties = {
-    [options.anchorOrigin.vertical]: offset,
+    [anchorOrigin.vertical]: offset,
   };
 
-  const TransitionComponent = useMemo(() => DefaultTransitionComponent(options.anchorOrigin), [options.anchorOrigin]);
+  const TransitionComponent = useMemo(() => SlideTransition(anchorOrigin), [anchorOrigin]);
 
   return (
     <Snackbar
       open={open}
       style={style}
-      anchorOrigin={options.anchorOrigin}
-      autoHideDuration={options.autoHideDuration}
-      action={!messageIsValidElement ? action : undefined}
+      anchorOrigin={anchorOrigin}
+      autoHideDuration={autoHideDuration}
+      action={action}
       TransitionComponent={TransitionComponent}
-      // todo: might have to catch the clickaway
       onClose={onClose}
       TransitionProps={{ onExited: onRemove }}
     >
-      <>{content}</>
+      {content}
     </Snackbar>
   );
 };
@@ -85,6 +102,10 @@ function getTransitionDirection(anchorOrigin: SnackbarOrigin) {
   return TransitionDirectionMap[anchorOrigin.vertical];
 }
 
-const DefaultTransitionComponent = (anchorOrigin: SnackbarOrigin): SnackbarProps['TransitionComponent'] => props => (
-  <Slide {...props} direction={getTransitionDirection(anchorOrigin)} />
-);
+const SlideTransition = (anchorOrigin: SnackbarOrigin): SnackbarProps['TransitionComponent'] => props => {
+  return <Slide {...props} direction={getTransitionDirection(anchorOrigin)} />;
+};
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
