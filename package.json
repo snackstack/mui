@@ -36,11 +36,13 @@
   },
   "peerDependencies": {
     "@mui/material": ">=5",
-    "react": ">=16"
+    "react": ">=16",
+    "@snackstack/core": ">=0"
   },
   "devDependencies": {
     "@mui/material": "^5.8.7",
     "@size-limit/preset-small-lib": "^7.0.8",
+    "@snackstack/core": "^0.0.0-experimental-9098e3aae",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "husky": "^8.0.1",
@@ -65,8 +67,5 @@
       "path": "dist/core.esm.js",
       "limit": "10 KB"
     }
-  ],
-  "dependencies": {
-    "@snackstack/core": "^0.0.0-experimental-9098e3aae"
-  }
+  ]
 }
