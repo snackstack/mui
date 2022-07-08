@@ -18,8 +18,8 @@ export const MuiSnackbar: FC<Props> = ({ snack, options }) => {
   const { id: snackId, open, message, variant, action } = snack;
 
   // todo: better defaults
-  options.heightOffset = options.spacing ?? 20;
-  options.spacing = options.spacing ?? 20;
+  const heightOffset = options.heightOffset ?? 20;
+  const spacing = options.spacing ?? 20;
 
   const snackManager = useSnackManager();
 
@@ -37,7 +37,7 @@ export const MuiSnackbar: FC<Props> = ({ snack, options }) => {
     </Alert>
   );
 
-  const offset = options.heightOffset + snack.index * options.spacing;
+  const offset = heightOffset + snack.index * spacing;
 
   const style: React.CSSProperties = {
     [options.anchorOrigin.vertical]: offset,
