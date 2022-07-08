@@ -1402,10 +1402,10 @@
     "@size-limit/esbuild" "7.0.8"
     "@size-limit/file" "7.0.8"
 
-"@snackstack/core@^0.0.0-experimental-2cdc78e4e":
-  version "0.0.0-experimental-2cdc78e4e"
-  resolved "https://registry.yarnpkg.com/@snackstack/core/-/core-0.0.0-experimental-2cdc78e4e.tgz#773f49cf7c8fea359dae826879bcff2f46cdd3ff"
-  integrity sha512-1nlQ6PcwWUHkuiOZYKa9WStUezWX8QCHUOoyUn3HCi+4sAP7/vnMqAfsd11sDOc7wkGUcGejtD875h/EShzwsQ==
+"@snackstack/core@^0.0.0-experimental-9098e3aae":
+  version "0.0.0-experimental-9098e3aae"
+  resolved "https://registry.yarnpkg.com/@snackstack/core/-/core-0.0.0-experimental-9098e3aae.tgz#9c29917061251d5c351ec797eacdde72ac20bde5"
+  integrity sha512-dyJ5z896NFUHH9GT564hWjpwg118xsZBmKtE+5MabTHTjhEjdr9XQMMcIdFboy4RHtGVrswyT4S/r0bzSGyMIg==
   dependencies:
     use-sync-external-store "^1.2.0"
 
