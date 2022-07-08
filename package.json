@@ -2,7 +2,7 @@
   "name": "@snackstack/mui",
   "version": "0.0.0",
   "description": "",
-  "homepage": "https://github.com/snackstack/material-ui#readme",
+  "homepage": "https://github.com/snackstack/mui#readme",
   "license": "MIT",
   "author": {
     "name": "Tobias Tengler",
@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/snackstack/material-ui.git"
+    "url": "git+https://github.com/snackstack/mui.git"
   },
   "bugs": {
-    "url": "https://github.com/snackstack/material-ui/issues"
+    "url": "https://github.com/snackstack/mui/issues"
   },
   "main": "dist/index.js",
   "module": "dist/core.esm.js",
