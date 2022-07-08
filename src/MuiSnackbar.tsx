@@ -1,13 +1,4 @@
-import {
-  Alert,
-  AlertColor,
-  Slide,
-  SlideProps,
-  Snackbar,
-  SnackbarOrigin,
-  SnackbarProps,
-  useThemeProps,
-} from '@mui/material';
+import { Alert, AlertColor, Slide, SlideProps, Snackbar, SnackbarOrigin, SnackbarProps } from '@mui/material';
 import { Snack, ActiveSnack, useSnackManager } from '@snackstack/core';
 import React, { FC, useCallback, useMemo } from 'react';
 
@@ -62,7 +53,7 @@ export const MuiSnackbar: FC<Props> = ({ snack, options }) => {
       autoHideDuration={options.autoHideDuration}
       action={!messageIsValidElement ? action : undefined}
       TransitionComponent={TransitionComponent}
-      // Might have to catch the clickaway
+      // todo: might have to catch the clickaway
       onClose={onClose}
       TransitionProps={{ onExited: onRemove }}
     >
