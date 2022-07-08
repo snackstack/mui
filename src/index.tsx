@@ -1,1 +1,1 @@
-export { MaterialSnackProvider } from './MaterialSnackProvider';
+export const dummy = 1;

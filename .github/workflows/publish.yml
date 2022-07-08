@@ -1,6 +1,13 @@
 name: Publish
 
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The new version'
+        required: true
+        type: text
+        
   release:
     types: [published]
 
@@ -11,7 +18,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 16.x
           registry-url: https://registry.npmjs.org/
       - uses: actions/cache@v2
         with:
@@ -21,13 +28,14 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn build
+      - run: yarn version --new-version "${{ github.event.release.tag_name || inputs.version }}"
       - run: yarn pack --filename package.tgz
       - run: yarn publish package.tgz --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 16.x
           registry-url: https://npm.pkg.github.com/
           scope: '@snackstack'
       - run: yarn publish package.tgz
