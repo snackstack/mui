@@ -1,83 +1,78 @@
 import { Slide, SlideProps, Snackbar, SnackbarOrigin, SnackbarProps } from '@mui/material';
-import { Snack, ActiveSnack, useSnackManager } from '@snackstack/core';
-import React, { FC, useCallback, useMemo } from 'react';
+import { Snack, useSnackManager } from '@snackstack/core';
+import React, { useCallback, useMemo } from 'react';
 import MuiAlert, { AlertProps, AlertColor } from '@mui/material/Alert';
+import { MuiSnackbarOptions } from './types/MuiSnackbarOptions';
 
-export type MuiSnackbarProps = Pick<SnackbarProps, 'anchorOrigin' | 'autoHideDuration'> & {
-  spacing?: number;
-  borderDistance?: number;
+type Props = Pick<MuiSnackbarOptions, 'autoHideDuration'> & {
+  snack: Snack;
+  heightOffset: number;
+  anchorOrigin: Exclude<SnackbarProps['anchorOrigin'], undefined>;
 };
-
-type Props = {
-  snack: ActiveSnack;
-  options: MuiSnackbarProps;
-};
-
-const defaultAnchorOrigin: SnackbarOrigin = {
-  vertical: 'bottom',
-  horizontal: 'left',
-};
-
-// todo: better defaults
-const defaultBorderDistance = 20;
-const defaultSpacing = 5;
-const defaultAutohideDuration = 3000;
 
 /** @internal */
-export const MuiSnackbar: FC<Props> = ({ snack, options }) => {
-  const { id: snackId, open, message, variant, persist, action } = snack;
+export const MuiSnackbar = React.forwardRef<any, Props>(
+  ({ snack, heightOffset, anchorOrigin, autoHideDuration }, ref) => {
+    const { id: snackId, status, variant } = snack;
 
-  const borderDistance = options.borderDistance ?? defaultBorderDistance;
-  const spacing = options.spacing ?? defaultSpacing;
-  const autoHideDuration = persist ? undefined : options.autoHideDuration ?? defaultAutohideDuration;
-  const anchorOrigin = options.anchorOrigin ?? defaultAnchorOrigin;
+    const snackManager = useSnackManager();
 
-  const snackManager = useSnackManager();
+    const onClose = useCallback<Exclude<SnackbarProps['onClose'], undefined>>(
+      (_, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
 
-  const onClose = useCallback<Exclude<SnackbarProps['onClose'], undefined>>(
-    (_, reason) => {
-      if (reason === 'clickaway') {
-        return;
-      }
+        snackManager.close(snackId);
+      },
+      [snackId, snackManager]
+    );
 
-      snackManager.close(snackId);
-    },
-    [snackId, snackManager]
-  );
+    const onRemove = useCallback(() => {
+      snackManager.remove(snackId);
+    }, [snackId, snackManager]);
 
-  const onRemove = useCallback(() => {
-    snackManager.remove(snackId);
-  }, [snackId, snackManager]);
+    let action = snack.action;
 
-  const content = (
-    <Alert action={action} severity={getSeverity(variant)}>
-      {message}
-    </Alert>
-  );
+    if (typeof action === 'function') {
+      action = action(snack);
+    }
 
-  const offset = borderDistance + snack.index * spacing;
+    let message = snack.message;
 
-  const style: React.CSSProperties = {
-    [anchorOrigin.vertical]: offset,
-  };
+    if (typeof message === 'function') {
+      message = message(snack);
+    }
 
-  const TransitionComponent = useMemo(() => SlideTransition(anchorOrigin), [anchorOrigin]);
+    const content = (
+      <Alert action={action} severity={getSeverity(variant)}>
+        {message}
+      </Alert>
+    );
 
-  return (
-    <Snackbar
-      open={open}
-      style={style}
-      anchorOrigin={anchorOrigin}
-      autoHideDuration={autoHideDuration}
-      action={action}
-      TransitionComponent={TransitionComponent}
-      onClose={onClose}
-      TransitionProps={{ onExited: onRemove }}
-    >
-      {content}
-    </Snackbar>
-  );
-};
+    const style: React.CSSProperties = {
+      [anchorOrigin.vertical]: heightOffset,
+    };
+
+    const TransitionComponent = useMemo(() => SlideTransition(anchorOrigin), [anchorOrigin]);
+
+    return (
+      <Snackbar
+        ref={ref}
+        open={status === 'open'}
+        style={style}
+        anchorOrigin={anchorOrigin}
+        autoHideDuration={autoHideDuration}
+        action={action}
+        TransitionComponent={TransitionComponent}
+        onClose={onClose}
+        TransitionProps={{ onExited: onRemove }}
+      >
+        {content}
+      </Snackbar>
+    );
+  }
+);
 
 function getSeverity(variant: Snack['variant']): AlertColor | undefined {
   if (variant === 'default') {
