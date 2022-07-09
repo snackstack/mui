@@ -1,1 +1,0 @@
-export { MuiSnackbars } from './MuiSnackbars';

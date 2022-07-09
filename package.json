@@ -51,7 +51,8 @@
     "@emotion/styled": "^11.3.0",
     "@mui/material": "^5.0.0",
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "@snackstack/core": "^1.2.0"
   },
   "peerDependenciesMeta": {
     "@emotion/react": {
@@ -64,7 +65,7 @@
   "devDependencies": {
     "@mui/material": "^5.8.7",
     "@size-limit/preset-small-lib": "^7.0.8",
-    "@snackstack/core": "^1.0.0",
+    "@snackstack/core": "^1.2.0",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "husky": "^8.0.1",

@@ -1402,10 +1402,10 @@
     "@size-limit/esbuild" "7.0.8"
     "@size-limit/file" "7.0.8"
 
-"@snackstack/core@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@snackstack/core/-/core-1.0.0.tgz#ab69f13f24d83a6f644cca76c433732c16cb35df"
-  integrity sha512-pTs0PXQsZFk4l8UlAmCZtuOlaA9tMjIM0Vzn7S0m4QBsBaoqT1cQfnn/Xicwz2pCn9Kzh+BTfTCyrI7PJxQ08Q==
+"@snackstack/core@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@snackstack/core/-/core-1.2.0.tgz#3877e0737553858e3b06528fd3267530aa9fa920"
+  integrity sha512-FYGe65o28GZ+fRI5mmvMdTsw9jAIpa9WivHjj0/ccDwtGQrlR1ZO3uQIp7IKgkxvg59u8TG8BSO/6GEEuDr2PA==
   dependencies:
     resize-observer-polyfill "^1.5.1"
     use-sync-external-store "^1.2.0"
