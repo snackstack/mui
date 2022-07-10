@@ -1,4 +1,4 @@
-<p align="center" style="font-size: 30px;">@snackstack/mui</p>
+<h1 align="center" style="font-size: 30px;">@snackstack/mui</h1>
 <p align="center">A Material UI adapter for <a href="https://github.com/snackstack/core" alt="Link to @snackstack/core">@snackstack/core</a></p>
 
 <p align="center">
@@ -57,3 +57,5 @@ root.render(
 ```
 
 [Learn more about the Material UI adapter](https://snackstack.github.io/docs/adapters/mui)
+
+[Learn more about managing notifications](https://snackstack.github.io/docs/guides/managing-notifications)
