@@ -42,7 +42,7 @@ export const MuiSnack = React.forwardRef<unknown, MuiSnackProps>(
         open={props.status === 'open'}
         style={style}
         anchorOrigin={anchorOrigin}
-        autoHideDuration={autoHideDuration}
+        autoHideDuration={props.isActive ? autoHideDuration : undefined}
         action={props.action}
         TransitionComponent={TransitionComponent}
         onClose={onClose}
