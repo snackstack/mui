@@ -31,7 +31,7 @@ yarn add @snackstack/core @snackstack/mui
 
 Make sure you have setup the `SnackProvider` component as shown in the [Get started](https://snackstack.github.io/docs#setup) section of the documentation.
 
-Now you just need to render the `MuiSnackbars` component below the `SnackProvider` component.
+Then you just need to import the `MuiSnack` component and pass it as the value for the `Component` property on the [SnackStack](https://snackstack.github.io/docs/api-reference/components/SnackStack) component.
 
 ```diff
 import React from 'react';
