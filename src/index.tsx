@@ -1,7 +1,7 @@
 import { Slide, SlideProps, Snackbar, SnackbarOrigin, SnackbarProps, useTheme } from '@mui/material';
 import MuiAlert, { AlertProps, AlertColor } from '@mui/material/Alert';
 import { Snack, SnackProps } from '@snackstack/core';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 
 const defaultAutoHideDuration = 3000;
 const defaultAnchorOrigin: SnackbarOrigin = { vertical: 'bottom', horizontal: 'left' };
@@ -14,6 +14,9 @@ export type MuiSnackProps = SnackProps & {
 export const MuiSnack = React.forwardRef<unknown, MuiSnackProps>(
   ({ autoHideDuration = defaultAutoHideDuration, anchorOrigin = defaultAnchorOrigin, ...props }, ref) => {
     const theme = useTheme();
+
+    const offset = props.offset;
+    const previousOffset = usePrevious(offset);
 
     const onClose = useCallback<Exclude<SnackbarProps['onClose'], undefined>>(
       (_, reason) => {
@@ -36,10 +39,16 @@ export const MuiSnack = React.forwardRef<unknown, MuiSnackProps>(
 
     const style: React.CSSProperties = {
       [anchorOrigin.vertical]: props.offset,
-      MozTransition: `all ${transitionDuration}ms`,
-      msTransition: `all ${transitionDuration}ms`,
-      transition: `all ${transitionDuration}ms`,
     };
+
+    // We only apply transitions when switching with another snack,
+    // otherwise we end up with glitches, if we expand, but there
+    // are snacks on top of us.
+    if (previousOffset !== undefined && offset <= previousOffset) {
+      style.MozTransition = `all ${transitionDuration}ms`;
+      style.msTransition = `all ${transitionDuration}ms`;
+      style.transition = `all ${transitionDuration}ms`;
+    }
 
     const TransitionComponent = useMemo(() => SlideTransition(anchorOrigin), [anchorOrigin]);
 
@@ -91,4 +100,14 @@ function getTransitionDirection(anchorOrigin: SnackbarOrigin) {
   }
 
   return TransitionDirectionMap[anchorOrigin.vertical];
+}
+
+function usePrevious<T extends any>(value: T) {
+  const ref = useRef<T>();
+
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+
+  return ref.current;
 }
