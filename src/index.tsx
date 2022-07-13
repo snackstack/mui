@@ -39,7 +39,7 @@ export const MuiSnack = React.forwardRef<unknown, MuiSnackProps>(
     return (
       <Snackbar
         ref={ref}
-        open={status === 'open'}
+        open={props.status === 'open'}
         style={style}
         anchorOrigin={anchorOrigin}
         autoHideDuration={autoHideDuration}
