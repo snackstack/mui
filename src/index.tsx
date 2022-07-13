@@ -1,4 +1,4 @@
-import { Slide, SlideProps, Snackbar, SnackbarOrigin, SnackbarProps } from '@mui/material';
+import { Slide, SlideProps, Snackbar, SnackbarOrigin, SnackbarProps, useTheme } from '@mui/material';
 import MuiAlert, { AlertProps, AlertColor } from '@mui/material/Alert';
 import { Snack, SnackProps } from '@snackstack/core';
 import React, { useCallback, useMemo } from 'react';
@@ -13,6 +13,8 @@ export type MuiSnackProps = SnackProps & {
 
 export const MuiSnack = React.forwardRef<unknown, MuiSnackProps>(
   ({ autoHideDuration = defaultAutoHideDuration, anchorOrigin = defaultAnchorOrigin, ...props }, ref) => {
+    const theme = useTheme();
+
     const onClose = useCallback<Exclude<SnackbarProps['onClose'], undefined>>(
       (_, reason) => {
         if (reason === 'clickaway') {
@@ -30,8 +32,13 @@ export const MuiSnack = React.forwardRef<unknown, MuiSnackProps>(
       </Alert>
     );
 
+    const transitionDuration = theme.transitions.duration.enteringScreen;
+
     const style: React.CSSProperties = {
       [anchorOrigin.vertical]: props.offset,
+      MozTransition: `all ${transitionDuration}ms`,
+      msTransition: `all ${transitionDuration}ms`,
+      transition: `all ${transitionDuration}ms`,
     };
 
     const TransitionComponent = useMemo(() => SlideTransition(anchorOrigin), [anchorOrigin]);
@@ -44,6 +51,7 @@ export const MuiSnack = React.forwardRef<unknown, MuiSnackProps>(
         anchorOrigin={anchorOrigin}
         autoHideDuration={props.isActive ? autoHideDuration : undefined}
         action={props.action}
+        transitionDuration={transitionDuration}
         TransitionComponent={TransitionComponent}
         onClose={onClose}
         TransitionProps={{ onExited: props.onExited }}
