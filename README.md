@@ -34,26 +34,23 @@ Make sure you have setup the `SnackProvider` component as shown in the [Get star
 Now you just need to render the `MuiSnackbars` component below the `SnackProvider` component.
 
 ```diff
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { SnackProvider, SnackManager } from "@snackstack/core";
-+ import { MuiSnackbars } from "@snackstack/mui";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { SnackProvider, SnackStack, SnackManager } from '@snackstack/core';
++ import { MuiSnack } from '@snackstack/mui';
 
 const snackManager = new SnackManager({ maxSnacks: 7 });
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
     <SnackProvider manager={snackManager}>
       <App />
 
-+     <MuiSnackbars />
++     <SnackStack Component={MuiSnack} />
     </SnackProvider>
   </React.StrictMode>
-);
 ```
 
 [Learn more about the Material UI adapter](https://snackstack.github.io/docs/adapters/mui)
